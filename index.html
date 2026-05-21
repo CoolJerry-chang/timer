@@ -46,16 +46,13 @@
     letter-spacing: 0.05em;
   }
 
-  h1 span {
-    color: var(--gold);
-  }
+  h1 span { color: var(--gold); }
 
   .container {
     width: 100%;
     max-width: 520px;
   }
 
-  /* Timer Card */
   .timer-card {
     background: var(--card-bg);
     border-radius: 20px;
@@ -65,28 +62,8 @@
     transition: box-shadow 0.5s ease;
   }
 
-  .timer-card.warning {
-    box-shadow: 0 0 30px var(--warning-glow), var(--card-shadow);
-  }
-
-  .timer-card.danger {
-    box-shadow: 0 0 30px var(--danger-glow), var(--card-shadow);
-  }
-
-  /* Time Display */
-  .time-display {
-    font-family: 'Rubik', sans-serif;
-    font-size: 6rem;
-    font-weight: 700;
-    color: var(--brown-dark);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-    transition: color 0.5s ease;
-    letter-spacing: 0.02em;
-  }
-
-  .time-display.warning { color: var(--warning); }
-  .time-display.danger { color: var(--danger); }
+  .timer-card.warning { box-shadow: 0 0 30px var(--warning-glow), var(--card-shadow); }
+  .timer-card.danger { box-shadow: 0 0 30px var(--danger-glow), var(--card-shadow); }
 
   .time-label {
     font-size: 0.875rem;
@@ -95,7 +72,6 @@
     letter-spacing: 0.1em;
   }
 
-  /* Progress Ring */
   .progress-container {
     position: relative;
     width: 200px;
@@ -103,16 +79,8 @@
     margin: 0 auto 2rem;
   }
 
-  .progress-ring {
-    transform: rotate(-90deg);
-  }
-
-  .progress-ring-bg {
-    fill: none;
-    stroke: #ece7df;
-    stroke-width: 6;
-  }
-
+  .progress-ring { transform: rotate(-90deg); }
+  .progress-ring-bg { fill: none; stroke: #ece7df; stroke-width: 6; }
   .progress-ring-fill {
     fill: none;
     stroke: var(--gold);
@@ -120,7 +88,6 @@
     stroke-linecap: round;
     transition: stroke-dashoffset 1s linear, stroke 0.5s ease;
   }
-
   .progress-ring-fill.warning { stroke: var(--warning); }
   .progress-ring-fill.danger { stroke: var(--danger); }
 
@@ -135,11 +102,9 @@
     color: var(--brown-dark);
     transition: color 0.5s ease;
   }
-
   .progress-time.warning { color: var(--warning); }
   .progress-time.danger { color: var(--danger); }
 
-  /* Input Area */
   .input-group {
     display: flex;
     gap: 0.75rem;
@@ -163,10 +128,7 @@
     outline: none;
     transition: border-color 0.2s;
   }
-
-  .time-input:focus {
-    border-color: var(--gold);
-  }
+  .time-input:focus { border-color: var(--gold); }
 
   .input-sep {
     font-family: 'Rubik', sans-serif;
@@ -175,20 +137,9 @@
     font-weight: 500;
   }
 
-  .input-label {
-    font-size: 0.75rem;
-    color: var(--brown-light);
-    text-align: center;
-  }
+  .input-label { font-size: 0.75rem; color: var(--brown-light); text-align: center; }
+  .input-col { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
 
-  .input-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-  }
-
-  /* Preset Buttons */
   .presets {
     display: flex;
     gap: 0.5rem;
@@ -209,19 +160,9 @@
     cursor: pointer;
     transition: all 0.2s;
   }
+  .preset-btn:hover { border-color: var(--gold); color: var(--gold); background: #fdf8f0; }
 
-  .preset-btn:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-    background: #fdf8f0;
-  }
-
-  /* Control Buttons */
-  .controls {
-    display: flex;
-    gap: 0.75rem;
-    justify-content: center;
-  }
+  .controls { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
 
   .btn {
     font-family: 'Noto Sans TC', sans-serif;
@@ -235,57 +176,22 @@
     letter-spacing: 0.05em;
   }
 
-  .btn-primary {
-    background: var(--gold);
-    color: var(--brown-dark);
-  }
+  .btn-primary { background: var(--gold); color: var(--brown-dark); }
+  .btn-primary:hover { background: var(--gold-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(232, 168, 56, 0.3); }
+  .btn-secondary { background: transparent; color: var(--brown-mid); border: 2px solid #ddd5c8; }
+  .btn-secondary:hover { border-color: var(--brown-mid); background: rgba(58, 42, 26, 0.04); }
+  .btn-danger { background: transparent; color: var(--danger); border: 2px solid var(--danger); }
+  .btn-danger:hover { background: var(--danger); color: white; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 
-  .btn-primary:hover {
-    background: var(--gold-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(232, 168, 56, 0.3);
-  }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--brown-mid);
-    border: 2px solid #ddd5c8;
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--brown-mid);
-    background: rgba(58, 42, 26, 0.04);
-  }
-
-  .btn-danger {
-    background: transparent;
-    color: var(--danger);
-    border: 2px solid var(--danger);
-  }
-
-  .btn-danger:hover {
-    background: var(--danger);
-    color: white;
-  }
-
-  .btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-  }
-
-  /* States */
   .hidden { display: none !important; }
 
-  /* Fullscreen Mode */
   .fullscreen-hint {
     font-size: 0.75rem;
     color: var(--brown-light);
     margin-top: 1.5rem;
     text-align: center;
   }
-
   .fullscreen-hint kbd {
     background: #e8e2d8;
     padding: 0.15rem 0.4rem;
@@ -294,52 +200,26 @@
     font-size: 0.7rem;
   }
 
-  body.fullscreen-mode {
-    justify-content: center;
-  }
-
-  body.fullscreen-mode .timer-card {
-    box-shadow: none;
-    background: transparent;
-    padding: 2rem;
-  }
-
-  body.fullscreen-mode .progress-container {
-    width: 320px;
-    height: 320px;
-  }
-
-  body.fullscreen-mode .progress-time {
-    font-size: 5rem;
-  }
-
+  body.fullscreen-mode { justify-content: center; }
+  body.fullscreen-mode .timer-card { box-shadow: none; background: transparent; padding: 2rem; }
+  body.fullscreen-mode .progress-container { width: 320px; height: 320px; }
+  body.fullscreen-mode .progress-time { font-size: 5rem; }
   body.fullscreen-mode .progress-ring-bg,
-  body.fullscreen-mode .progress-ring-fill {
-    stroke-width: 5;
-  }
+  body.fullscreen-mode .progress-ring-fill { stroke-width: 5; }
 
-  /* Pulse animation for last 10 seconds */
   @keyframes pulse {
     0%, 100% { transform: translate(-50%, -50%) scale(1); }
     50% { transform: translate(-50%, -50%) scale(1.05); }
   }
+  .progress-time.pulse { animation: pulse 1s ease-in-out infinite; }
 
-  .progress-time.pulse {
-    animation: pulse 1s ease-in-out infinite;
-  }
-
-  /* Shake animation for time's up */
   @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
   }
+  .timer-card.times-up { animation: shake 0.5s ease-in-out; }
 
-  .timer-card.times-up {
-    animation: shake 0.5s ease-in-out;
-  }
-
-  /* Overtime Display */
   .overtime-label {
     font-size: 0.875rem;
     color: var(--danger);
@@ -348,78 +228,8 @@
     letter-spacing: 0.05em;
   }
 
-  /* Popup (mini) Mode */
-  body.popup-mode {
-    padding: 0.75rem;
-    min-height: auto;
-    background: var(--bg);
-  }
-
-  body.popup-mode h1 { display: none; }
-  body.popup-mode .fullscreen-hint { display: none; }
-  body.popup-mode .popup-open-btn { display: none; }
-
-  body.popup-mode .container {
-    max-width: 100%;
-  }
-
-  body.popup-mode .timer-card {
-    padding: 1.25rem 1rem;
-    border-radius: 14px;
-    box-shadow: none;
-    background: var(--card-bg);
-  }
-
-  body.popup-mode .progress-container {
-    width: 130px;
-    height: 130px;
-    margin-bottom: 1rem;
-  }
-
-  body.popup-mode .progress-time {
-    font-size: 2rem;
-  }
-
-  body.popup-mode .progress-ring-bg,
-  body.popup-mode .progress-ring-fill {
-    stroke-width: 7;
-  }
-
-  body.popup-mode .time-label,
-  body.popup-mode .overtime-label {
-    font-size: 0.75rem;
-    margin-bottom: 0.75rem;
-  }
-
-  body.popup-mode .controls {
-    gap: 0.4rem;
-    flex-wrap: wrap;
-  }
-
-  body.popup-mode .btn {
-    font-size: 0.8rem;
-    padding: 0.45rem 1rem;
-  }
-
-  body.popup-mode .input-group { margin-bottom: 0.75rem; }
-  body.popup-mode .time-input {
-    width: 55px;
-    font-size: 1rem;
-    padding: 0.4rem;
-  }
-
-  body.popup-mode .presets {
-    margin-bottom: 1rem;
-    gap: 0.35rem;
-  }
-
-  body.popup-mode .preset-btn {
-    font-size: 0.7rem;
-    padding: 0.3rem 0.6rem;
-  }
-
-  /* Popup open button */
-  .popup-open-btn {
+  /* PiP open button */
+  .pip-open-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -434,19 +244,19 @@
     transition: all 0.2s;
     margin-top: 0.75rem;
   }
+  .pip-open-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .pip-open-btn svg { width: 14px; height: 14px; }
 
-  .popup-open-btn:hover {
-    border-color: var(--gold);
+  .pip-active-hint {
+    display: none;
+    font-size: 0.8rem;
     color: var(--gold);
-  }
-
-  .popup-open-btn svg {
-    width: 14px;
-    height: 14px;
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: 500;
   }
 
   @media (max-width: 480px) {
-    .time-display { font-size: 4rem; }
     .timer-card { padding: 2rem 1.5rem; }
     .progress-container { width: 160px; height: 160px; }
     .progress-time { font-size: 2.5rem; }
@@ -515,10 +325,12 @@
     按 <kbd>F</kbd> 全螢幕模式 &middot; 按 <kbd>Space</kbd> 暫停/繼續 &middot; 按 <kbd>R</kbd> 重設
   </div>
 
-  <button class="popup-open-btn" onclick="openPopup()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-    彈出小視窗（放在投影片旁）
+  <button class="pip-open-btn" id="pipBtn" onclick="openPiP()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="12" y="9" width="8" height="6" rx="1"/></svg>
+    置頂迷你視窗（可浮在全螢幕投影片上）
   </button>
+
+  <div class="pip-active-hint" id="pipHint">迷你視窗已開啟，計時器在浮動視窗中運作</div>
 </div>
 
 <script>
@@ -529,9 +341,9 @@
   let isRunning = false;
   let isOvertime = false;
   let overtimeSeconds = 0;
+  let pipWindow = null;
 
   const circumference = 2 * Math.PI * 90;
-
   const $ = id => document.getElementById(id);
 
   function setPreset(min) {
@@ -576,7 +388,6 @@
       progressTime.classList.remove('pulse');
     }
 
-    // Progress ring
     if (isOvertime) {
       ring.style.strokeDashoffset = circumference;
     } else {
@@ -584,7 +395,6 @@
       ring.style.strokeDashoffset = circumference * (1 - progress);
     }
 
-    // Labels
     if (isOvertime) {
       $('timeLabel').classList.add('hidden');
       $('overtimeLabel').classList.remove('hidden');
@@ -592,11 +402,15 @@
       $('timeLabel').classList.remove('hidden');
       $('overtimeLabel').classList.add('hidden');
     }
+
+    // Sync to PiP window if open
+    if (pipWindow && !pipWindow.closed) {
+      updatePiPDisplay(timeStr, stateClass);
+    }
   }
 
   function tick() {
     if (isPaused) return;
-
     if (remainingSeconds > 0) {
       remainingSeconds--;
       if (remainingSeconds === 0) {
@@ -608,7 +422,6 @@
     } else {
       overtimeSeconds++;
     }
-
     updateDisplay();
   }
 
@@ -625,7 +438,6 @@
     isRunning = true;
 
     $('progressRing').style.strokeDasharray = circumference;
-
     $('setupView').classList.add('hidden');
     $('runningView').classList.remove('hidden');
     $('pauseBtn').textContent = '暫停';
@@ -637,6 +449,10 @@
   function togglePause() {
     isPaused = !isPaused;
     $('pauseBtn').textContent = isPaused ? '繼續' : '暫停';
+    if (pipWindow && !pipWindow.closed) {
+      const pipPauseBtn = pipWindow.document.getElementById('pip-pause');
+      if (pipPauseBtn) pipPauseBtn.textContent = isPaused ? '▶' : '⏸';
+    }
   }
 
   function addTime(sec) {
@@ -664,6 +480,187 @@
     $('runningView').classList.add('hidden');
     $('timerCard').className = 'timer-card';
     document.title = 'CCOO 演講倒數計時器';
+
+    if (pipWindow && !pipWindow.closed) {
+      updatePiPDisplay('0:00', '');
+    }
+  }
+
+  // --- Document Picture-in-Picture ---
+  function getPiPStyles() {
+    return `
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: 'Noto Sans TC', 'Rubik', sans-serif;
+        background: #f5f1ea;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        padding: 12px;
+        user-select: none;
+        overflow: hidden;
+      }
+      .pip-ring-wrap {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        margin-bottom: 8px;
+      }
+      .pip-ring { transform: rotate(-90deg); }
+      .pip-ring-bg { fill: none; stroke: #ece7df; stroke-width: 8; }
+      .pip-ring-fill {
+        fill: none; stroke: #e8a838; stroke-width: 8; stroke-linecap: round;
+        transition: stroke-dashoffset 1s linear, stroke 0.4s ease;
+      }
+      .pip-ring-fill.warning { stroke: #e8a838; }
+      .pip-ring-fill.danger { stroke: #c0392b; }
+      .pip-time {
+        position: absolute; top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: 'Rubik', sans-serif;
+        font-size: 1.8rem; font-weight: 700; color: #3a2a1a;
+        transition: color 0.4s ease;
+      }
+      .pip-time.warning { color: #e8a838; }
+      .pip-time.danger { color: #c0392b; }
+      .pip-label {
+        font-size: 0.65rem; color: #6b5d50; margin-bottom: 10px;
+        letter-spacing: 0.08em;
+      }
+      .pip-label.danger { color: #c0392b; }
+      .pip-controls { display: flex; gap: 6px; }
+      .pip-btn {
+        font-size: 0.85rem; width: 34px; height: 34px;
+        border-radius: 50%; border: 1.5px solid #ddd5c8; background: #fff;
+        color: #4a3f35; cursor: pointer; transition: all 0.15s;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .pip-btn:hover { border-color: #e8a838; color: #e8a838; }
+      @keyframes pulse {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); }
+        50% { transform: translate(-50%, -50%) scale(1.08); }
+      }
+      .pip-time.pulse { animation: pulse 1s ease-in-out infinite; }
+    `;
+  }
+
+  function getPiPHTML() {
+    const circ = (2 * Math.PI * 50).toFixed(2);
+    return `
+      <div class="pip-ring-wrap">
+        <svg class="pip-ring" width="120" height="120" viewBox="0 0 120 120">
+          <circle class="pip-ring-bg" cx="60" cy="60" r="50"/>
+          <circle class="pip-ring-fill" id="pip-ring" cx="60" cy="60" r="50"
+            stroke-dasharray="${circ}" stroke-dashoffset="0"/>
+        </svg>
+        <div class="pip-time" id="pip-time">0:00</div>
+      </div>
+      <div class="pip-label" id="pip-label">剩餘時間</div>
+      <div class="pip-controls">
+        <button class="pip-btn" id="pip-pause" title="暫停/繼續">⏸</button>
+        <button class="pip-btn" id="pip-add" title="+1 分鐘">+1</button>
+      </div>
+    `;
+  }
+
+  function updatePiPDisplay(timeStr, stateClass) {
+    if (!pipWindow || pipWindow.closed) return;
+    const doc = pipWindow.document;
+    const timeEl = doc.getElementById('pip-time');
+    const ringEl = doc.getElementById('pip-ring');
+    const labelEl = doc.getElementById('pip-label');
+    if (!timeEl) return;
+
+    timeEl.textContent = timeStr;
+    timeEl.className = 'pip-time' + (stateClass ? ' ' + stateClass : '');
+
+    if (!isOvertime && remainingSeconds <= 10 && remainingSeconds > 0) {
+      timeEl.classList.add('pulse');
+    }
+
+    ringEl.className.baseVal = 'pip-ring-fill' + (stateClass ? ' ' + stateClass : '');
+
+    const pipCirc = 2 * Math.PI * 50;
+    if (isOvertime) {
+      ringEl.style.strokeDashoffset = pipCirc;
+    } else {
+      const progress = totalSeconds > 0 ? remainingSeconds / totalSeconds : 0;
+      ringEl.style.strokeDashoffset = pipCirc * (1 - progress);
+    }
+
+    if (isOvertime) {
+      labelEl.textContent = '已超時';
+      labelEl.className = 'pip-label danger';
+    } else {
+      labelEl.textContent = '剩餘時間';
+      labelEl.className = 'pip-label';
+    }
+  }
+
+  async function openPiP() {
+    // Document PiP API (Chrome 116+)
+    if ('documentPictureInPicture' in window) {
+      try {
+        pipWindow = await documentPictureInPicture.requestWindow({
+          width: 200,
+          height: 240,
+        });
+
+        const style = pipWindow.document.createElement('style');
+        style.textContent = getPiPStyles();
+        pipWindow.document.head.appendChild(style);
+
+        // Load fonts
+        const fontLink = pipWindow.document.createElement('link');
+        fontLink.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&family=Rubik:wght@700&display=swap';
+        fontLink.rel = 'stylesheet';
+        pipWindow.document.head.appendChild(fontLink);
+
+        pipWindow.document.body.innerHTML = getPiPHTML();
+
+        // Wire up buttons
+        pipWindow.document.getElementById('pip-pause').addEventListener('click', () => {
+          if (isRunning) togglePause();
+        });
+        pipWindow.document.getElementById('pip-add').addEventListener('click', () => {
+          if (isRunning) addTime(60);
+        });
+
+        pipWindow.addEventListener('pagehide', () => {
+          pipWindow = null;
+          $('pipHint').style.display = 'none';
+          $('pipBtn').style.display = '';
+        });
+
+        $('pipHint').style.display = 'block';
+        $('pipBtn').style.display = 'none';
+
+        // Initial sync
+        if (isRunning) {
+          const displaySec = isOvertime ? -overtimeSeconds : remainingSeconds;
+          const stateClass = isOvertime ? 'danger' : getStateClass(remainingSeconds, totalSeconds);
+          updatePiPDisplay(formatTime(displaySec), stateClass);
+          const pipPauseBtn = pipWindow.document.getElementById('pip-pause');
+          if (pipPauseBtn) pipPauseBtn.textContent = isPaused ? '▶' : '⏸';
+        }
+
+        return;
+      } catch (e) {
+        console.warn('Document PiP failed, falling back:', e);
+      }
+    }
+
+    // Fallback: regular popup
+    const w = 220, h = 280;
+    const left = screen.width - w - 30;
+    const top = 60;
+    window.open(
+      location.pathname + '?popup',
+      'ccoo-timer-popup',
+      `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=no,toolbar=no,menubar=no,location=no,status=no,alwaysOnTop=yes`
+    );
   }
 
   // Keyboard shortcuts
@@ -674,11 +671,9 @@
       e.preventDefault();
       if (isRunning) togglePause();
     }
-
     if (e.key === 'r' || e.key === 'R') {
       if (isRunning) resetTimer();
     }
-
     if (e.key === 'f' || e.key === 'F') {
       document.body.classList.toggle('fullscreen-mode');
       if (!document.fullscreenElement) {
@@ -687,35 +682,14 @@
         document.exitFullscreen().catch(() => {});
       }
     }
-
     if (e.key === 'Escape') {
-      if (document.body.classList.contains('fullscreen-mode')) {
-        document.body.classList.remove('fullscreen-mode');
-      }
-    }
-  });
-
-  document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement) {
       document.body.classList.remove('fullscreen-mode');
     }
   });
 
-  // Popup mode
-  function openPopup() {
-    const w = 260, h = 380;
-    const left = window.screenX + window.outerWidth - w - 30;
-    const top = window.screenY + 60;
-    window.open(
-      location.pathname + '?popup',
-      'ccoo-timer-popup',
-      `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=no,toolbar=no,menubar=no,location=no,status=no`
-    );
-  }
-
-  if (location.search.includes('popup')) {
-    document.body.classList.add('popup-mode');
-  }
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) document.body.classList.remove('fullscreen-mode');
+  });
 </script>
 </body>
 </html>
