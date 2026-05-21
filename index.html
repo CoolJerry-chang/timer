@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCOO 演講倒數計時器</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f1ea;
+    --gold: #e8a838;
+    --gold-hover: #d4962e;
+    --brown-dark: #3a2a1a;
+    --brown-mid: #4a3f35;
+    --brown-light: #6b5d50;
+    --card-bg: #ffffff;
+    --card-shadow: 0 2px 16px rgba(58, 42, 26, 0.08);
+    --danger: #c0392b;
+    --danger-glow: rgba(192, 57, 43, 0.3);
+    --warning: #e8a838;
+    --warning-glow: rgba(232, 168, 56, 0.3);
+  }
+
+  body {
+    font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    background: var(--bg);
+    color: var(--brown-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    user-select: none;
+  }
+
+  h1 {
+    font-family: 'Rubik', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--brown-mid);
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+  }
+
+  h1 span {
+    color: var(--gold);
+  }
+
+  .container {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  /* Timer Card */
+  .timer-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    padding: 3rem 2.5rem;
+    text-align: center;
+    transition: box-shadow 0.5s ease;
+  }
+
+  .timer-card.warning {
+    box-shadow: 0 0 30px var(--warning-glow), var(--card-shadow);
+  }
+
+  .timer-card.danger {
+    box-shadow: 0 0 30px var(--danger-glow), var(--card-shadow);
+  }
+
+  /* Time Display */
+  .time-display {
+    font-family: 'Rubik', sans-serif;
+    font-size: 6rem;
+    font-weight: 700;
+    color: var(--brown-dark);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    transition: color 0.5s ease;
+    letter-spacing: 0.02em;
+  }
+
+  .time-display.warning { color: var(--warning); }
+  .time-display.danger { color: var(--danger); }
+
+  .time-label {
+    font-size: 0.875rem;
+    color: var(--brown-light);
+    margin-bottom: 2rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* Progress Ring */
+  .progress-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 2rem;
+  }
+
+  .progress-ring {
+    transform: rotate(-90deg);
+  }
+
+  .progress-ring-bg {
+    fill: none;
+    stroke: #ece7df;
+    stroke-width: 6;
+  }
+
+  .progress-ring-fill {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear, stroke 0.5s ease;
+  }
+
+  .progress-ring-fill.warning { stroke: var(--warning); }
+  .progress-ring-fill.danger { stroke: var(--danger); }
+
+  .progress-time {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Rubik', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--brown-dark);
+    transition: color 0.5s ease;
+  }
+
+  .progress-time.warning { color: var(--warning); }
+  .progress-time.danger { color: var(--danger); }
+
+  /* Input Area */
+  .input-group {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .time-input {
+    width: 70px;
+    text-align: center;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--brown-dark);
+    background: var(--bg);
+    border: 2px solid #e0d8cc;
+    border-radius: 12px;
+    padding: 0.6rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .time-input:focus {
+    border-color: var(--gold);
+  }
+
+  .input-sep {
+    font-family: 'Rubik', sans-serif;
+    font-size: 1.25rem;
+    color: var(--brown-light);
+    font-weight: 500;
+  }
+
+  .input-label {
+    font-size: 0.75rem;
+    color: var(--brown-light);
+    text-align: center;
+  }
+
+  .input-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  /* Preset Buttons */
+  .presets {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .preset-btn {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--brown-mid);
+    background: var(--bg);
+    border: 1.5px solid #ddd5c8;
+    border-radius: 9999px;
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .preset-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: #fdf8f0;
+  }
+
+  /* Control Buttons */
+  .controls {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .btn {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 9999px;
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--brown-dark);
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(232, 168, 56, 0.3);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--brown-mid);
+    border: 2px solid #ddd5c8;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--brown-mid);
+    background: rgba(58, 42, 26, 0.04);
+  }
+
+  .btn-danger {
+    background: transparent;
+    color: var(--danger);
+    border: 2px solid var(--danger);
+  }
+
+  .btn-danger:hover {
+    background: var(--danger);
+    color: white;
+  }
+
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* States */
+  .hidden { display: none !important; }
+
+  /* Fullscreen Mode */
+  .fullscreen-hint {
+    font-size: 0.75rem;
+    color: var(--brown-light);
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  .fullscreen-hint kbd {
+    background: #e8e2d8;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 0.7rem;
+  }
+
+  body.fullscreen-mode {
+    justify-content: center;
+  }
+
+  body.fullscreen-mode .timer-card {
+    box-shadow: none;
+    background: transparent;
+    padding: 2rem;
+  }
+
+  body.fullscreen-mode .progress-container {
+    width: 320px;
+    height: 320px;
+  }
+
+  body.fullscreen-mode .progress-time {
+    font-size: 5rem;
+  }
+
+  body.fullscreen-mode .progress-ring-bg,
+  body.fullscreen-mode .progress-ring-fill {
+    stroke-width: 5;
+  }
+
+  /* Pulse animation for last 10 seconds */
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.05); }
+  }
+
+  .progress-time.pulse {
+    animation: pulse 1s ease-in-out infinite;
+  }
+
+  /* Shake animation for time's up */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  .timer-card.times-up {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  /* Overtime Display */
+  .overtime-label {
+    font-size: 0.875rem;
+    color: var(--danger);
+    font-weight: 500;
+    margin-top: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 480px) {
+    .time-display { font-size: 4rem; }
+    .timer-card { padding: 2rem 1.5rem; }
+    .progress-container { width: 160px; height: 160px; }
+    .progress-time { font-size: 2.5rem; }
+    body.fullscreen-mode .progress-container { width: 240px; height: 240px; }
+    body.fullscreen-mode .progress-time { font-size: 3.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>CCOO <span>演講計時器</span></h1>
+
+  <div class="timer-card" id="timerCard">
+    <!-- Setup View -->
+    <div id="setupView">
+      <div class="input-group">
+        <div class="input-col">
+          <input type="number" class="time-input" id="inputMin" value="5" min="0" max="99">
+          <span class="input-label">分鐘</span>
+        </div>
+        <span class="input-sep">:</span>
+        <div class="input-col">
+          <input type="number" class="time-input" id="inputSec" value="0" min="0" max="59">
+          <span class="input-label">秒</span>
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="preset-btn" onclick="setPreset(1)">1 分鐘</button>
+        <button class="preset-btn" onclick="setPreset(3)">3 分鐘</button>
+        <button class="preset-btn" onclick="setPreset(5)">5 分鐘</button>
+        <button class="preset-btn" onclick="setPreset(10)">10 分鐘</button>
+        <button class="preset-btn" onclick="setPreset(15)">15 分鐘</button>
+        <button class="preset-btn" onclick="setPreset(20)">20 分鐘</button>
+      </div>
+
+      <div class="controls">
+        <button class="btn btn-primary" onclick="startTimer()">開始計時</button>
+      </div>
+    </div>
+
+    <!-- Running View -->
+    <div id="runningView" class="hidden">
+      <div class="progress-container">
+        <svg class="progress-ring" width="100%" height="100%" viewBox="0 0 200 200">
+          <circle class="progress-ring-bg" cx="100" cy="100" r="90" />
+          <circle class="progress-ring-fill" id="progressRing" cx="100" cy="100" r="90"
+            stroke-dasharray="565.49" stroke-dashoffset="0" />
+        </svg>
+        <div class="progress-time" id="progressTime">5:00</div>
+      </div>
+
+      <div class="time-label" id="timeLabel">剩餘時間</div>
+      <div class="overtime-label hidden" id="overtimeLabel">已超時</div>
+
+      <div class="controls">
+        <button class="btn btn-secondary" id="pauseBtn" onclick="togglePause()">暫停</button>
+        <button class="btn btn-secondary" id="addTimeBtn" onclick="addTime(60)">+1 分鐘</button>
+        <button class="btn btn-danger" onclick="resetTimer()">重設</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="fullscreen-hint">
+    按 <kbd>F</kbd> 全螢幕模式 &middot; 按 <kbd>Space</kbd> 暫停/繼續 &middot; 按 <kbd>R</kbd> 重設
+  </div>
+</div>
+
+<script>
+  let totalSeconds = 0;
+  let remainingSeconds = 0;
+  let timerInterval = null;
+  let isPaused = false;
+  let isRunning = false;
+  let isOvertime = false;
+  let overtimeSeconds = 0;
+
+  const circumference = 2 * Math.PI * 90;
+
+  const $ = id => document.getElementById(id);
+
+  function setPreset(min) {
+    $('inputMin').value = min;
+    $('inputSec').value = 0;
+  }
+
+  function formatTime(sec) {
+    const negative = sec < 0;
+    sec = Math.abs(sec);
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return (negative ? '-' : '') + m + ':' + String(s).padStart(2, '0');
+  }
+
+  function getStateClass(remaining, total) {
+    if (remaining <= 0) return 'danger';
+    const ratio = remaining / total;
+    if (ratio <= 0.1 || remaining <= 10) return 'danger';
+    if (ratio <= 0.25 || remaining <= 30) return 'warning';
+    return '';
+  }
+
+  function updateDisplay() {
+    const displaySec = isOvertime ? -overtimeSeconds : remainingSeconds;
+    const timeStr = formatTime(displaySec);
+    $('progressTime').textContent = timeStr;
+    document.title = timeStr + ' — CCOO 計時器';
+
+    const stateClass = isOvertime ? 'danger' : getStateClass(remainingSeconds, totalSeconds);
+    const progressTime = $('progressTime');
+    const ring = $('progressRing');
+    const card = $('timerCard');
+
+    progressTime.className = 'progress-time' + (stateClass ? ' ' + stateClass : '');
+    ring.className.baseVal = 'progress-ring-fill' + (stateClass ? ' ' + stateClass : '');
+    card.className = 'timer-card' + (stateClass ? ' ' + stateClass : '');
+
+    if (!isOvertime && remainingSeconds <= 10 && remainingSeconds > 0) {
+      progressTime.classList.add('pulse');
+    } else {
+      progressTime.classList.remove('pulse');
+    }
+
+    // Progress ring
+    if (isOvertime) {
+      ring.style.strokeDashoffset = circumference;
+    } else {
+      const progress = totalSeconds > 0 ? remainingSeconds / totalSeconds : 0;
+      ring.style.strokeDashoffset = circumference * (1 - progress);
+    }
+
+    // Labels
+    if (isOvertime) {
+      $('timeLabel').classList.add('hidden');
+      $('overtimeLabel').classList.remove('hidden');
+    } else {
+      $('timeLabel').classList.remove('hidden');
+      $('overtimeLabel').classList.add('hidden');
+    }
+  }
+
+  function tick() {
+    if (isPaused) return;
+
+    if (remainingSeconds > 0) {
+      remainingSeconds--;
+      if (remainingSeconds === 0) {
+        isOvertime = true;
+        overtimeSeconds = 0;
+        $('timerCard').classList.add('times-up');
+        setTimeout(() => $('timerCard').classList.remove('times-up'), 600);
+      }
+    } else {
+      overtimeSeconds++;
+    }
+
+    updateDisplay();
+  }
+
+  function startTimer() {
+    const min = parseInt($('inputMin').value) || 0;
+    const sec = parseInt($('inputSec').value) || 0;
+    totalSeconds = min * 60 + sec;
+    if (totalSeconds <= 0) return;
+
+    remainingSeconds = totalSeconds;
+    isOvertime = false;
+    overtimeSeconds = 0;
+    isPaused = false;
+    isRunning = true;
+
+    $('progressRing').style.strokeDasharray = circumference;
+
+    $('setupView').classList.add('hidden');
+    $('runningView').classList.remove('hidden');
+    $('pauseBtn').textContent = '暫停';
+
+    updateDisplay();
+    timerInterval = setInterval(tick, 1000);
+  }
+
+  function togglePause() {
+    isPaused = !isPaused;
+    $('pauseBtn').textContent = isPaused ? '繼續' : '暫停';
+  }
+
+  function addTime(sec) {
+    if (isOvertime) {
+      isOvertime = false;
+      remainingSeconds = sec;
+      overtimeSeconds = 0;
+      totalSeconds = sec;
+    } else {
+      remainingSeconds += sec;
+      totalSeconds += sec;
+    }
+    updateDisplay();
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    isRunning = false;
+    isPaused = false;
+    isOvertime = false;
+    overtimeSeconds = 0;
+
+    $('setupView').classList.remove('hidden');
+    $('runningView').classList.add('hidden');
+    $('timerCard').className = 'timer-card';
+    document.title = 'CCOO 演講倒數計時器';
+  }
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT') return;
+
+    if (e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      if (isRunning) togglePause();
+    }
+
+    if (e.key === 'r' || e.key === 'R') {
+      if (isRunning) resetTimer();
+    }
+
+    if (e.key === 'f' || e.key === 'F') {
+      document.body.classList.toggle('fullscreen-mode');
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    if (e.key === 'Escape') {
+      if (document.body.classList.contains('fullscreen-mode')) {
+        document.body.classList.remove('fullscreen-mode');
+      }
+    }
+  });
+
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) {
+      document.body.classList.remove('fullscreen-mode');
+    }
+  });
+</script>
+</body>
+</html>
